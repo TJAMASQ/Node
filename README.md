@@ -3,7 +3,7 @@
 ## Source
 The MASQ project was forked from Substratum's Node project in order to carry on development after Substratum ceased 
 operations in October of 2019. All credit for the original idea, the original design, and the first two years of MASQ's
-development belongs to Substratum.
+development belongs to Substratum LLC.
 
 ## Purpose
 The MASQ Network is an open-source network that allows anyone to allocate spare computing resources to make the internet
@@ -505,4 +505,4 @@ recommend using a 64-bit version to build.
 We do plan to release binaries that will run on 32-bit Windows, but they will likely be built on 64-bit Windows.
 
 
-Copyright (c) 2017-2019, Substratum LLC (https://substratum.net) and/or its affiliates. All rights reserved.
+Copyright (c) 2019 - 2020 MASQ Project
