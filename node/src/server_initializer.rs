@@ -329,6 +329,7 @@ pub mod tests {
     use crate::test_utils::logging::{init_test_logging, TestLogHandler};
     use crate::test_utils::ByteArrayReader;
     use crate::test_utils::ByteArrayWriter;
+    use masq_lib::crash_point::CrashPoint;
     use masq_lib::test_utils::fake_stream_holder::FakeStreamHolder;
     use std::sync::Arc;
     use std::sync::Mutex;

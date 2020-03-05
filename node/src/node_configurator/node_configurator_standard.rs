@@ -1,17 +1,13 @@
 // Copyright (c) 2017-2019, Substratum LLC (https://substratum.net) and/or its affiliates. All rights reserved.
 
 use crate::bootstrapper::BootstrapperConfig;
-use crate::node_configurator::{
-    app_head,
-    initialize_database, NodeConfigurator,
-};
-use crate::sub_lib::crash_point::CrashPoint;
-use clap::{App};
+use crate::node_configurator::{app_head, initialize_database, NodeConfigurator};
+use clap::App;
 use indoc::indoc;
 use masq_lib::command::StdStreams;
-use masq_lib::constants::{HIGHEST_USABLE_PORT, LOWEST_USABLE_INSECURE_PORT};
-use masq_lib::shared_schema::{shared_app, ui_port_arg};
+use masq_lib::crash_point::CrashPoint;
 use masq_lib::shared_schema::UI_PORT_HELP;
+use masq_lib::shared_schema::{shared_app, ui_port_arg};
 
 pub struct NodeConfiguratorStandardPrivileged {}
 
@@ -89,8 +85,7 @@ const HELP_TEXT: &str = indoc!(
 );
 
 pub fn app() -> App<'static, 'static> {
-    shared_app (app_head().after_help(HELP_TEXT))
-        .arg(ui_port_arg(&UI_PORT_HELP))
+    shared_app(app_head().after_help(HELP_TEXT)).arg(ui_port_arg(&UI_PORT_HELP))
 }
 
 pub mod standard {
@@ -543,9 +538,7 @@ pub mod standard {
 mod tests {
     use super::*;
     use crate::blockchain::bip32::Bip32ECKeyPair;
-    use crate::blockchain::blockchain_interface::{
-        chain_id_from_name, contract_address,
-    };
+    use crate::blockchain::blockchain_interface::{chain_id_from_name, contract_address};
     use crate::bootstrapper::RealUser;
     use crate::config_dao::{ConfigDao, ConfigDaoReal};
     use crate::database::db_initializer::{DbInitializer, DbInitializerReal};
@@ -563,6 +556,7 @@ mod tests {
     use crate::test_utils::ByteArrayWriter;
     use crate::test_utils::{main_cryptde, ArgsBuilder, TEST_DEFAULT_CHAIN_NAME};
     use crate::test_utils::{make_default_persistent_configuration, DEFAULT_CHAIN_ID};
+    use masq_lib::constants::{DEFAULT_CHAIN_NAME, DEFAULT_GAS_PRICE, DEFAULT_UI_PORT};
     use masq_lib::multi_config::{
         CommandLineVcl, ConfigFileVcl, MultiConfig, NameValueVclArg, VclArg, VirtualCommandLine,
     };
@@ -578,7 +572,6 @@ mod tests {
     use std::path::PathBuf;
     use std::str::FromStr;
     use std::sync::{Arc, Mutex};
-    use masq_lib::shared_schema::{DEFAULT_UI_PORT, DEFAULT_CHAIN_NAME, DEFAULT_GAS_PRICE};
 
     fn make_default_cli_params() -> ArgsBuilder {
         ArgsBuilder::new()

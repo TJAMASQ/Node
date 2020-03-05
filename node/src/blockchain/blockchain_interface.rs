@@ -5,6 +5,7 @@ use crate::sub_lib::logger::Logger;
 use crate::sub_lib::wallet::Wallet;
 use actix::Message;
 use futures::{future, Future};
+use masq_lib::constants::DEFAULT_CHAIN_NAME;
 use std::convert::{From, TryFrom, TryInto};
 use std::fmt;
 use std::fmt::{Debug, Display, Formatter};
@@ -12,7 +13,6 @@ use web3::contract::{Contract, Options};
 use web3::transports::EventLoopHandle;
 use web3::types::{Address, BlockNumber, Bytes, FilterBuilder, Log, H256, U256};
 use web3::{Transport, Web3};
-use masq_lib::shared_schema::DEFAULT_CHAIN_NAME;
 
 // HOT (Ropsten)
 pub const TESTNET_CONTRACT_ADDRESS: Address = Address {

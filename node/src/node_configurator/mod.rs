@@ -7,7 +7,7 @@ pub mod node_configurator_standard;
 
 use crate::blockchain::bip32::Bip32ECKeyPair;
 use crate::blockchain::bip39::Bip39;
-use crate::blockchain::blockchain_interface::{chain_id_from_name};
+use crate::blockchain::blockchain_interface::chain_id_from_name;
 use crate::bootstrapper::RealUser;
 use crate::database::db_initializer::{DbInitializer, DbInitializerReal, DATABASE_FILE};
 use crate::persistent_configuration::{
@@ -21,6 +21,7 @@ use clap::{crate_description, crate_version, value_t, App, AppSettings, Arg};
 use dirs::{data_local_dir, home_dir};
 use masq_lib::command::StdStreams;
 use masq_lib::multi_config::{merge, CommandLineVcl, EnvironmentVcl, MultiConfig, VclArg};
+use masq_lib::shared_schema::{chain_arg, config_file_arg, data_directory_arg, real_user_arg};
 use rpassword;
 use rpassword::read_password_with_reader;
 use rustc_hex::FromHex;
@@ -30,7 +31,6 @@ use std::io::Read;
 use std::path::PathBuf;
 use std::str::FromStr;
 use tiny_hderive::bip44::DerivationPath;
-use masq_lib::shared_schema::{chain_arg, config_file_arg, data_directory_arg, real_user_arg};
 
 pub trait NodeConfigurator<T> {
     fn configure(&self, args: &Vec<String>, streams: &mut StdStreams<'_>) -> T;
@@ -453,6 +453,7 @@ pub fn flushed_write(target: &mut dyn io::Write, string: &str) {
 }
 
 pub mod common_validators {
+    use masq_lib::constants::LOWEST_USABLE_INSECURE_PORT;
     use regex::Regex;
     use tiny_hderive::bip44::DerivationPath;
 
@@ -673,13 +674,14 @@ mod tests {
         ArgsBuilder, ByteArrayWriter, DEFAULT_CHAIN_ID, TEST_DEFAULT_CHAIN_NAME,
     };
     use bip39::{Mnemonic, MnemonicType, Seed};
+    use masq_lib::constants::DEFAULT_CHAIN_NAME;
     use masq_lib::multi_config::MultiConfig;
+    use masq_lib::shared_schema::db_password_arg;
     use masq_lib::test_utils::environment_guard::EnvironmentGuard;
     use masq_lib::test_utils::utils::ensure_node_home_directory_exists;
     use std::io::Cursor;
     use std::sync::{Arc, Mutex};
     use tiny_hderive::bip44::DerivationPath;
-    use masq_lib::shared_schema::db_password_arg;
 
     #[test]
     fn validate_ethereum_address_requires_an_address_that_is_42_characters_long() {

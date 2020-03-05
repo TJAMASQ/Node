@@ -1,14 +1,13 @@
-use lazy_static::lazy_static;
-use clap::{App, Arg};
+use crate::constants::{
+    DEFAULT_CHAIN_NAME, DEFAULT_GAS_PRICE, DEFAULT_UI_PORT, HIGHEST_USABLE_PORT,
+    LOWEST_USABLE_INSECURE_PORT,
+};
 use crate::crash_point::CrashPoint;
+use clap::{App, Arg};
+use lazy_static::lazy_static;
 
-pub const DEFAULT_CHAIN_NAME: &str = "mainnet";
-pub const DEFAULT_GAS_PRICE: &str = "1";
-pub const LOWEST_USABLE_INSECURE_PORT: u16 = 1025;
-pub const HIGHEST_USABLE_PORT: u16 = 65535;
-pub const DEFAULT_UI_PORT: u16 = 5333;
-
-pub const BLOCKCHAIN_SERVICE_HELP: &str = "The Ethereum client you wish to use to provide Blockchain \
+pub const BLOCKCHAIN_SERVICE_HELP: &str =
+    "The Ethereum client you wish to use to provide Blockchain \
      exit services from your MASQ Node (e.g. http://localhost:8545, \
      https://ropsten.infura.io/v3/YOUR-PROJECT-ID, https://mainnet.infura.io/v3/YOUR-PROJECT-ID).";
 pub const CHAIN_HELP: &str =
@@ -156,9 +155,9 @@ pub fn db_password_arg(help: &str) -> Arg {
 }
 
 pub fn earning_wallet_arg<F>(help: &str, validator: F) -> Arg
-    where
-        F: 'static,
-        F: Fn(String) -> Result<(), String>,
+where
+    F: 'static,
+    F: Fn(String) -> Result<(), String>,
 {
     Arg::with_name("earning-wallet")
         .long("earning-wallet")
@@ -201,121 +200,120 @@ pub fn ui_port_arg(help: &str) -> Arg {
         .help(help)
 }
 
-pub fn shared_app (head: App<'static, 'static>) -> App<'static, 'static> {
-    head
-        .arg(
-            Arg::with_name("blockchain-service-url")
-                .long("blockchain-service-url")
-                .empty_values(false)
-                .value_name("URL")
-                .takes_value(true)
-                .help(BLOCKCHAIN_SERVICE_HELP),
-        )
-        .arg(
-            Arg::with_name("clandestine-port")
-                .long("clandestine-port")
-                .value_name("CLANDESTINE-PORT")
-                .empty_values(false)
-                .validator(common_validators::validate_clandestine_port)
-                .help(&CLANDESTINE_PORT_HELP),
-        )
-        .arg(config_file_arg())
-        .arg(
-            Arg::with_name("consuming-private-key")
-                .long("consuming-private-key")
-                .value_name("PRIVATE-KEY")
-                .takes_value(true)
-                .validator(common_validators::validate_private_key)
-                .help(CONSUMING_PRIVATE_KEY_HELP),
-        )
-        .arg(
-            Arg::with_name("crash-point")
-                .long("crash-point")
-                .value_name("CRASH-POINT")
-                .takes_value(true)
-                .default_value(&DEFAULT_CRASH_POINT_VALUE)
-                .possible_values(&CrashPoint::variants())
-                .case_insensitive(true)
-                .hidden(true),
-        )
-        .arg(data_directory_arg())
-        .arg(db_password_arg(DB_PASSWORD_HELP))
-        .arg(
-            Arg::with_name("dns-servers")
-                .long("dns-servers")
-                .value_name("DNS-SERVERS")
-                .takes_value(true)
-                .use_delimiter(true)
-                .validator(common_validators::validate_ip_address)
-                .help(DNS_SERVERS_HELP),
-        )
-        .arg(earning_wallet_arg(
-            EARNING_WALLET_HELP,
-            common_validators::validate_ethereum_address,
-        ))
-        .arg(chain_arg())
-        .arg(
-            Arg::with_name("fake-public-key")
-                .long("fake-public-key")
-                .value_name("FAKE-PUBLIC-KEY")
-                .takes_value(true)
-                .hidden(true),
-        )
-        .arg(
-            Arg::with_name("gas-price")
-                .long("gas-price")
-                .value_name("GAS-PRICE")
-                .min_values(1)
-                .max_values(1)
-                .takes_value(true)
-                .validator(common_validators::validate_gas_price)
-                .help(&GAS_PRICE_HELP),
-        )
-        .arg(
-            Arg::with_name("ip")
-                .long("ip")
-                .value_name("IP")
-                .takes_value(true)
-                .validator(common_validators::validate_ip_address)
-                .help(IP_ADDRESS_HELP),
-        )
-        .arg(
-            Arg::with_name("log-level")
-                .long("log-level")
-                .value_name("FILTER")
-                .takes_value(true)
-                .possible_values(&["off", "error", "warn", "info", "debug", "trace"])
-                .default_value("warn")
-                .case_insensitive(true)
-                .help(LOG_LEVEL_HELP),
-        )
-        .arg(
-            Arg::with_name("neighborhood-mode")
-                .long("neighborhood-mode")
-                .value_name("NEIGHBORHOOD-MODE")
-                .takes_value(true)
-                .possible_values(&["zero-hop", "originate-only", "consume-only", "standard"])
-                .default_value("standard")
-                .case_insensitive(true)
-                .help(NEIGHBORHOOD_MODE_HELP),
-        )
-        .arg(
-            Arg::with_name("neighbors")
-                .long("neighbors")
-                .value_name("NODE-DESCRIPTORS")
-                .takes_value(true)
-                .use_delimiter(true)
-                .help(NEIGHBORS_HELP),
-        )
-        .arg(real_user_arg())
+pub fn shared_app(head: App<'static, 'static>) -> App<'static, 'static> {
+    head.arg(
+        Arg::with_name("blockchain-service-url")
+            .long("blockchain-service-url")
+            .empty_values(false)
+            .value_name("URL")
+            .takes_value(true)
+            .help(BLOCKCHAIN_SERVICE_HELP),
+    )
+    .arg(
+        Arg::with_name("clandestine-port")
+            .long("clandestine-port")
+            .value_name("CLANDESTINE-PORT")
+            .empty_values(false)
+            .validator(common_validators::validate_clandestine_port)
+            .help(&CLANDESTINE_PORT_HELP),
+    )
+    .arg(config_file_arg())
+    .arg(
+        Arg::with_name("consuming-private-key")
+            .long("consuming-private-key")
+            .value_name("PRIVATE-KEY")
+            .takes_value(true)
+            .validator(common_validators::validate_private_key)
+            .help(CONSUMING_PRIVATE_KEY_HELP),
+    )
+    .arg(
+        Arg::with_name("crash-point")
+            .long("crash-point")
+            .value_name("CRASH-POINT")
+            .takes_value(true)
+            .default_value(&DEFAULT_CRASH_POINT_VALUE)
+            .possible_values(&CrashPoint::variants())
+            .case_insensitive(true)
+            .hidden(true),
+    )
+    .arg(data_directory_arg())
+    .arg(db_password_arg(DB_PASSWORD_HELP))
+    .arg(
+        Arg::with_name("dns-servers")
+            .long("dns-servers")
+            .value_name("DNS-SERVERS")
+            .takes_value(true)
+            .use_delimiter(true)
+            .validator(common_validators::validate_ip_address)
+            .help(DNS_SERVERS_HELP),
+    )
+    .arg(earning_wallet_arg(
+        EARNING_WALLET_HELP,
+        common_validators::validate_ethereum_address,
+    ))
+    .arg(chain_arg())
+    .arg(
+        Arg::with_name("fake-public-key")
+            .long("fake-public-key")
+            .value_name("FAKE-PUBLIC-KEY")
+            .takes_value(true)
+            .hidden(true),
+    )
+    .arg(
+        Arg::with_name("gas-price")
+            .long("gas-price")
+            .value_name("GAS-PRICE")
+            .min_values(1)
+            .max_values(1)
+            .takes_value(true)
+            .validator(common_validators::validate_gas_price)
+            .help(&GAS_PRICE_HELP),
+    )
+    .arg(
+        Arg::with_name("ip")
+            .long("ip")
+            .value_name("IP")
+            .takes_value(true)
+            .validator(common_validators::validate_ip_address)
+            .help(IP_ADDRESS_HELP),
+    )
+    .arg(
+        Arg::with_name("log-level")
+            .long("log-level")
+            .value_name("FILTER")
+            .takes_value(true)
+            .possible_values(&["off", "error", "warn", "info", "debug", "trace"])
+            .default_value("warn")
+            .case_insensitive(true)
+            .help(LOG_LEVEL_HELP),
+    )
+    .arg(
+        Arg::with_name("neighborhood-mode")
+            .long("neighborhood-mode")
+            .value_name("NEIGHBORHOOD-MODE")
+            .takes_value(true)
+            .possible_values(&["zero-hop", "originate-only", "consume-only", "standard"])
+            .default_value("standard")
+            .case_insensitive(true)
+            .help(NEIGHBORHOOD_MODE_HELP),
+    )
+    .arg(
+        Arg::with_name("neighbors")
+            .long("neighbors")
+            .value_name("NODE-DESCRIPTORS")
+            .takes_value(true)
+            .use_delimiter(true)
+            .help(NEIGHBORS_HELP),
+    )
+    .arg(real_user_arg())
 }
 
 pub mod common_validators {
+    use crate::constants::LOWEST_USABLE_INSECURE_PORT;
     use regex::Regex;
-    use tiny_hderive::bip44::DerivationPath;
     use std::net::IpAddr;
     use std::str::FromStr;
-    use crate::shared_schema::LOWEST_USABLE_INSECURE_PORT;
+    use tiny_hderive::bip44::DerivationPath;
 
     pub fn validate_ip_address(address: String) -> Result<(), String> {
         match IpAddr::from_str(&address) {
@@ -417,14 +415,14 @@ mod tests {
 
     #[test]
     fn validate_private_key_requires_a_key_that_is_64_characters_long() {
-        let result = validators::validate_private_key(String::from("42"));
+        let result = common_validators::validate_private_key(String::from("42"));
 
         assert_eq!(Err("42".to_string()), result);
     }
 
     #[test]
     fn validate_private_key_must_contain_only_hex_characters() {
-        let result = validators::validate_private_key(String::from(
+        let result = common_validators::validate_private_key(String::from(
             "cc46befe8d169b89db447bd725fc2368b12542113555302598430cinvalidhex",
         ));
 
@@ -436,7 +434,7 @@ mod tests {
 
     #[test]
     fn validate_private_key_handles_happy_path() {
-        let result = validators::validate_private_key(String::from(
+        let result = common_validators::validate_private_key(String::from(
             "cc46befe8d169b89db447bd725fc2368b12542113555302598430cb5d5c74ea9",
         ));
 
@@ -447,7 +445,7 @@ mod tests {
     fn validate_ip_address_given_invalid_input() {
         assert_eq!(
             Err(String::from("not-a-valid-IP")),
-            validators::validate_ip_address(String::from("not-a-valid-IP")),
+            common_validators::validate_ip_address(String::from("not-a-valid-IP")),
         );
     }
 
@@ -455,7 +453,7 @@ mod tests {
     fn validate_ip_address_given_valid_input() {
         assert_eq!(
             Ok(()),
-            validators::validate_ip_address(String::from("1.2.3.4"))
+            common_validators::validate_ip_address(String::from("1.2.3.4"))
         );
     }
 
