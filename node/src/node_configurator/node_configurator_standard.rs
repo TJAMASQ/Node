@@ -167,9 +167,8 @@ const HELP_TEXT: &str = indoc!(
         3. Create the port forwarding entries in the router."
 );
 
-pub fn app() -> App<'static, 'static> {
-    app_head()
-        .after_help(HELP_TEXT)
+pub fn shared_app (head: App<'static, 'static>) -> App<'static, 'static> {
+    head
         .arg(
             Arg::with_name("blockchain-service-url")
                 .long("blockchain-service-url")
@@ -275,6 +274,10 @@ pub fn app() -> App<'static, 'static> {
                 .help(NEIGHBORS_HELP),
         )
         .arg(real_user_arg())
+}
+
+pub fn app() -> App<'static, 'static> {
+    shared_app (app_head().after_help(HELP_TEXT))
         .arg(ui_port_arg(&UI_PORT_HELP))
 }
 
