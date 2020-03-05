@@ -3,7 +3,7 @@
 use crate::bootstrapper::RealUser;
 use crate::node_configurator::{
     app_head, chain_arg, data_directory_arg, db_password_arg, real_user_arg, ui_port_arg,
-    NodeConfigurator, CONFIG_FILE_HELP, DB_PASSWORD_HELP,
+    NodeConfigurator, DB_PASSWORD_HELP,
 };
 use clap::{App, Arg};
 use lazy_static::lazy_static;

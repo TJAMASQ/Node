@@ -1,6 +1,6 @@
 // Copyright (c) 2017-2019, Substratum LLC (https://substratum.net) and/or its affiliates. All rights reserved.
 use crate::blockchain::blockchain_interface::{
-    chain_name_from_id, contract_creation_block_from_chain_id, DEFAULT_GAS_PRICE,
+    chain_name_from_id, contract_creation_block_from_chain_id,
 };
 use masq_lib::constants::{HIGHEST_RANDOM_CLANDESTINE_PORT, LOWEST_USABLE_INSECURE_PORT};
 use rand::prelude::*;

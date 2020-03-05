@@ -12,6 +12,7 @@ use web3::contract::{Contract, Options};
 use web3::transports::EventLoopHandle;
 use web3::types::{Address, BlockNumber, Bytes, FilterBuilder, Log, H256, U256};
 use web3::{Transport, Web3};
+use masq_lib::shared_schema::DEFAULT_CHAIN_NAME;
 
 // HOT (Ropsten)
 pub const TESTNET_CONTRACT_ADDRESS: Address = Address {
@@ -101,9 +102,6 @@ const TRANSACTION_LITERAL: H256 = H256 {
 };
 
 const TRANSFER_METHOD_ID: [u8; 4] = [0xa9, 0x05, 0x9c, 0xbb];
-
-pub const DEFAULT_GAS_PRICE: &str = "1";
-pub const DEFAULT_CHAIN_NAME: &str = "mainnet";
 
 #[derive(Clone, Debug, Eq, Message, PartialEq)]
 pub struct Transaction {

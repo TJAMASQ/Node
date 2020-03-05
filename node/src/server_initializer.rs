@@ -326,7 +326,6 @@ pub mod tests {
     use super::*;
     use crate::crash_test_dummy::CrashTestDummy;
     use crate::server_initializer::test_utils::PrivilegeDropperMock;
-    use crate::sub_lib::crash_point::CrashPoint;
     use crate::test_utils::logging::{init_test_logging, TestLogHandler};
     use crate::test_utils::ByteArrayReader;
     use crate::test_utils::ByteArrayWriter;

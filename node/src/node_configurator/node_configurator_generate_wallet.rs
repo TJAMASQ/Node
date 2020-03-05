@@ -4,7 +4,7 @@ use crate::blockchain::bip32::Bip32ECKeyPair;
 use crate::blockchain::bip39::Bip39;
 use crate::node_configurator::{
     app_head, chain_arg, common_validators, consuming_wallet_arg, create_wallet,
-    data_directory_arg, db_password_arg, earning_wallet_arg, flushed_write, language_arg,
+    earning_wallet_arg, flushed_write, language_arg,
     mnemonic_passphrase_arg, mnemonic_seed_exists, prepare_initialization_mode, real_user_arg,
     request_password_with_confirmation, request_password_with_retry, update_db_password, Either,
     NodeConfigurator, WalletCreationConfig, WalletCreationConfigMaker, DB_PASSWORD_HELP,
