@@ -89,14 +89,6 @@ impl SetupCommand {
         });
         Self { values }
     }
-
-    // pub fn validator(value: String) -> Result<(), String> {
-    //     if value.starts_with('=') || value.ends_with('=') || !value.contains('=') {
-    //         Err(format!("Attribute syntax: <name>=<value>, not {}", value))
-    //     } else {
-    //         Ok(())
-    //     }
-    // }
 }
 
 pub fn start_subcommand() -> App<'static, 'static> {
