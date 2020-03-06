@@ -779,6 +779,7 @@ mod tests {
     use std::io::Cursor;
     use std::sync::{Arc, Mutex};
     use tiny_hderive::bip44::DerivationPath;
+    use crate::node_configurator::node_configurator_standard::app;
 
     #[test]
     fn validate_ethereum_address_requires_an_address_that_is_42_characters_long() {
@@ -1013,6 +1014,18 @@ mod tests {
         App::new("test")
             .arg(data_directory_arg())
             .arg(config_file_arg())
+    }
+
+    #[test]
+    fn real_user_data_directory_and_chain_id_picks_correct_directory_for_default_chain() {
+        let args = ArgsBuilder::new();
+        let vcl = Box::new(CommandLineVcl::new(args.into()));
+        let multi_config = MultiConfig::new(&app(), vec![vcl]);
+
+        let (_, directory, chain_id) = real_user_data_directory_and_chain_id(&multi_config);
+
+        assert_eq! (directory, PathBuf::from ("booga"));
+        assert_eq! (chain_id, chain_id_from_name (DEFAULT_CHAIN_NAME));
     }
 
     #[test]
